@@ -1,4 +1,4 @@
-K-means Clustering Machine Learning Approach: describes block averaging, mean hemodynamic activity, and k-means clustering given hemodynamic response. This is the clustering method we're basing the project off off
+K-means Clustering Machine Learning Approach: describes block averaging, mean hemodynamic activity, and k-means clustering given hemodynamic response. This is the clustering method we're basing the project off of.
 
 Open-Access fNIRS Dataset: describes the data we're working with, links to the data/processing information on Github
 
