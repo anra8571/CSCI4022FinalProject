@@ -2,8 +2,8 @@
 
 import os
 from os.path import dirname, join as pjoin
-import scipy.io as sio
-import numpy as np
+import scipy.io as sio # type: ignore
+import numpy as np # type: ignore
 
 # Vars to set manually
 filename = "4_fv_rearranged.mat"
