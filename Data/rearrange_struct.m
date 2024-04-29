@@ -11,21 +11,35 @@ fv.x;
 data = [];
 
 % For each trial
+%for i = 1:75
+    % For each channel
+%    channel = [];
+%    for j = 1:40
+        % For each epoch
+%        trial = [];
+%        for k = 1:3
+            % Create a new array with [average1, average2, average3]
+%            trial = [trial fv.x(k, j, i)];
+%        end
+        % Create a new array with [channel1, channel2, channel3, etc.] where channel1 contains averages for each of 3 epochs
+%        channel = [channel trial];
+%    end
+%    data = [data channel];
+%end
+
+data = [];
+% For each trial
 for i = 1:75
     % For each channel
-    channel = [];
     for j = 1:40
         % For each epoch
-        trial = [];
         for k = 1:3
             % Create a new array with [average1, average2, average3]
-            trial = [trial fv.x(k, j, i)];
+            data = [data fv.x(k, j, i)];
         end
         % Create a new array with [channel1, channel2, channel3, etc.] where channel1 contains averages for each of 3 epochs
-        channel = [channel trial];
     end
-    data = [data channel];
 end
 
 data
-save('4_fv_rearranged.mat', "data");
+save('4_feature_vector.mat', "data");

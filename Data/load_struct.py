@@ -6,8 +6,8 @@ import scipy.io as sio # type: ignore
 import numpy as np # type: ignore
 
 # Vars to set manually
-filename = "4_fv_rearranged.mat"
-outfile = "4.np"
+filename = "4_feature_vector.mat"
+outfile = "4_fv.np"
 
 # Loads MATLAB file into a dictionary
 cwd = os.getcwd()
@@ -37,5 +37,5 @@ for i in range(75):
 print("Length of 1st Dimension: ", len(data))
 print("Length of 2nd Dimension: ", len(data[0]))
 print("Length of 3rd Dimension: ", len(data[0][0]))
-with open("4.np", 'wb') as f:
+with open(outfile, 'wb') as f:
     np.save(f, np.array(data))
