@@ -29,8 +29,8 @@ class Participant:
 
         # Loads MATLAB file into a dictionary
         cwd = os.getcwd()
-        directory = f"{cwd}/Data/{filename}"
-        save_directory = f"{cwd}/Data/{outfile}"
+        directory = f"{cwd}/Data/Clustering/{filename}"
+        save_directory = f"{cwd}/Data/NP/{outfile}"
         mat_content = sio.loadmat(directory)["X"]
 
         # Reads in 2D MATLAB struct and converts to expected 3D Numpy array (in MATLAB, the epoch and channel are both contained in column)
@@ -134,7 +134,7 @@ class Participant:
     # Checks the clusters from k-means against the ground truth data
     def accuracy_calculation(self, clusters):
         # Load the labels
-        ground_truth_struct = sio.loadmat(f'Data/{self.name}_labels.mat')
+        ground_truth_struct = sio.loadmat(f'Data/Clustering/{self.name}_labels.mat')
 
         # Convert from MATLAB struct to np array
         gt = []
@@ -155,7 +155,7 @@ class Participant:
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
     def cluster(self):
         print("Clustering the data - running kmeans 25 times and taking the highest accuracy score")
-        
+
         acc_high = 0
         clust_high = np.array([])
         mean_low = 0
@@ -176,3 +176,5 @@ class Participant:
         self.accuracy = acc_high
 
         print(f"The clustering accuracy is {self.accuracy * 100}")
+
+        return self.clusters, self.accuracy
