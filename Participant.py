@@ -11,13 +11,33 @@ class Participant:
     Each participant contains 75 trials, 40 channels, and 3 averages
     '''
 
-    def __init__(self, name, fv=[]):
+    def __init__(self, name, fv=[], labels=None):
         self.name = name
         self.fv = fv
+
         if len(self.fv) == 0:
             self.fv = self.load_struct()
+
         self.clusters = []
         self.accuracy = 0
+
+        if labels is None:
+            self.labels = self.get_labels()
+        else:
+            self.labels = labels
+
+    # Get the ground truth labels from the MATLAB file
+    def get_labels(self):
+        # Load the labels
+        ground_truth_struct = sio.loadmat(f'Data/Clustering/{self.name}_labels.mat')
+
+        # Convert from MATLAB struct to np array
+        gt = []
+        for elem in ground_truth_struct['Y']:
+            gt.append(elem[0])
+        gt_np = np.array(gt)
+
+        return gt_np
 
     # Finds the MATLAB file, converts struct to array, and saves in local filesystem
     def load_struct(self):
@@ -133,29 +153,23 @@ class Participant:
         return centroids, clusters, rec_error
     
     # Checks the clusters from k-means against the ground truth data
-    def accuracy_calculation(self, clusters):
-        # Load the labels
-        ground_truth_struct = sio.loadmat(f'Data/Clustering/{self.name}_labels.mat')
-
-        # Convert from MATLAB struct to np array
-        gt = []
-        for elem in ground_truth_struct['Y']:
-            gt.append(elem[0])
-        gt_np = np.array(gt)
+    def accuracy_calculation(self, clusters, labels):
+        if labels is None:
+            labels 
 
         # Accuracy = number of same labels / total number of labels
         correct = 0
-        for i in range(len(gt_np)):
-            if gt_np[i] == clusters[i]:
+        for i in range(len(self.labels)):
+            if self.labels[i] == clusters[i]:
                 correct += 1
 
-        accuracy = correct/len(gt_np)
+        accuracy = correct/len(self.labels)
 
         return accuracy
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
-    def cluster(self):
-        print("Clustering the data - running kmeans 25 times and taking the highest accuracy score")
+    def cluster(self, labels=None):
+        print(f"Clustering the data for {self.name} - running kmeans 25 times and taking the highest accuracy score")
 
         acc_high = 0
         clust_high = np.array([])
@@ -164,7 +178,7 @@ class Participant:
         for i in range(25):
             # Clusters the data
             centroids, clusters, meanerror = self.kmeans(self.fv)
-            acc = self.accuracy_calculation(clusters)
+            acc = self.accuracy_calculation(clusters, labels)
 
             # If this is the best trial so far, save the data
             if acc > acc_high:
