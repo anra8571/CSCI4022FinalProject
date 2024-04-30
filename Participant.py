@@ -11,10 +11,11 @@ class Participant:
     Each participant contains 75 trials, 40 channels, and 3 averages
     '''
 
-    def __init__(self, name):
+    def __init__(self, name, fv=[]):
         self.name = name
-        self.fv = []
-        self.fv = self.load_struct()
+        self.fv = fv
+        if len(self.fv) == 0:
+            self.fv = self.load_struct()
         self.clusters = []
         self.accuracy = 0
 

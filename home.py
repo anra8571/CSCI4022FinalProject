@@ -1,4 +1,5 @@
 from Participant import Participant as p
+import numpy as np
 
 # Run each participant as a separate set, getting the clustering accuracy for each and comparing it to the LOOCV accuracy
 def run_singles():
@@ -48,5 +49,23 @@ def run_singles():
 
     print("Accuracies: ", accuracies)
 
+    return [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
+
+# Input: participants is an array of all the participants loaded
+# Input: channel is an integer between 1-40 indicating which channel to pull
+def get_channel(participants, channel):
+    channel_array = []
+
+    for p in participants:
+        for trial in range(0, len(p.fv)):
+            # Account for Python being 0-indexed
+            channel_array.append(p.fv[trial, channel - 1, :])
+
+    return np.array(channel_array)
+
 if __name__ == "__main__":
-    run_singles()
+    ind_participants = run_singles()
+    c1_array = get_channel(np.array(ind_participants), 1)
+    print("C1 array: ", c1_array)
+    print(len(c1_array))
+    c1 = p("c1", fv=c1_array)
