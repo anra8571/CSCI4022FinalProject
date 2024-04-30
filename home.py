@@ -93,4 +93,4 @@ if __name__ == "__main__":
     labels_array.reshape([1, len(ind_participants) * 75])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster()
+    all_clusters, all_accuracy = all.cluster(40)

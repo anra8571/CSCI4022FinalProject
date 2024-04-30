@@ -168,14 +168,14 @@ class Participant:
         return accuracy
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
-    def cluster(self, labels=None):
-        print(f"Clustering the data for {self.name} - running kmeans 25 times and taking the highest accuracy score")
+    def cluster(self, k=25, labels=None):
+        print(f"Clustering the data for {self.name} - running kmeans {k} times and taking the highest accuracy score")
 
         acc_high = 0
         clust_high = np.array([])
         mean_low = 0
 
-        for i in range(25):
+        for i in range(k):
             # Clusters the data
             centroids, clusters, meanerror = self.kmeans(self.fv)
             acc = self.accuracy_calculation(clusters, labels)
