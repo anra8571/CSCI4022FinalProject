@@ -1,5 +1,6 @@
 from Participant import Participant as p
 import numpy as np
+import matplotlib.pyplot as plt
 
 # Run each participant as a separate set, getting the clustering accuracy for each and comparing it to the LOOCV accuracy
 def run_singles():
@@ -49,6 +50,8 @@ def run_singles():
 
     participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
 
+    participant_clusters = [p1_clust, p2_clust, p3_clust, p4_clust, p5_clust, p6_clust, p7_clust, p8_clust, p9_clust, p10_clust]
+
     print(f"Accuracies for the {len(participant_array)} participants: {accuracies}")
 
     return participant_array
@@ -80,6 +83,13 @@ def get_all_participants(participants):
 
     return np.array(p_array), np.array(labels_array)
 
+def visualize(x,y,cluster):
+    plt.colorbar(plt.scatter(x,y,c=cluster))
+    plt.legend()
+    plt.xlabel("Trial Number")
+    plt.ylabel("Trial Type")
+    plt.show()
+
 if __name__ == "__main__":
     # Gets array of all the individual participants clustered by trial
     ind_participants = run_singles()
@@ -94,3 +104,6 @@ if __name__ == "__main__":
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
     all_clusters, all_accuracy = all.cluster(40)
+    trials_array=np.tile(np.arange(1,76),10)
+    visualize(trials_array, all.labels, all_clusters)
+
