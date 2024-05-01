@@ -87,7 +87,7 @@ def visualize(x,y,cluster):
     plt.colorbar(plt.scatter(x,y,c=cluster))
     plt.legend()
     plt.xlabel("Trial Number")
-    plt.ylabel("Trial Type")
+    plt.ylabel("Participant Number")
     plt.show()
 
 if __name__ == "__main__":
@@ -100,23 +100,31 @@ if __name__ == "__main__":
 
     # A Participant containing all trials, all channels, all participants. Cluster by trial
     all_array, labels_array = get_all_participants(ind_participants)
+
     labels_array.reshape([1, len(ind_participants) * 75])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
     all_clusters, all_accuracy = all.cluster_3D(40)
     trials_array=np.tile(np.arange(1,76),10)
-    #visualize(trials_array, all.labels, all_clusters)
+    particp_array=np.repeat(np.arange(1,11),75)
+    #visualize(trials_array, particp_array, all_clusters)
+    
+    plt.scatter(particp_array,all_clusters, c=all.labels)
+    plt.xlabel("Trial Number")
+    plt.ylabel("Percent clustering similarity")
+    plt.show()
 
     channels, channel_labels = get_channel(np.array(ind_participants),1)
+    print(channels)
     channel_indices=np.full(40,1)
-    print(channel_indices)
     for i in range (2,40):
         channel, label=get_channel(np.array(ind_participants),i)
         channels=np.append(channels, channel)
         channel_labels=np.append(channel_labels, label)
         channel_indices=np.append(channel_indices, np.full(40,i))
+    print(channels)
     c = p('c', fv=channels, labels=channel_labels)
-    channel_clusters = c.cluster_3D(2)
+    channel_clusters = c.cluster_2D(2)
     print(channel_indices)
     #plt.scatter(channel_indices, channel_labels, c=channel_clusters)
 
