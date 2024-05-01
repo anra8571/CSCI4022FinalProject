@@ -64,7 +64,71 @@ def run_singles():
     p14_clust, p14_acc = p14.cluster_3D()
     accuracies.append(p14_acc)
 
-    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14]
+    p15 = p("15")
+    p15_clust, p15_acc = p15.cluster_3D()
+    accuracies.append(p15_acc)
+
+    p16 = p("16")
+    p16_clust, p16_acc = p16.cluster_3D()
+    accuracies.append(p16_acc)
+
+    p17 = p("17")
+    p17_clust, p17_acc = p17.cluster_3D()
+    accuracies.append(p17_acc)
+
+    p18 = p("18")
+    p18_clust, p18_acc = p18.cluster_3D()
+    accuracies.append(p18_acc)
+
+    p19 = p("19")
+    p19_clust, p19_acc = p19.cluster_3D()
+    accuracies.append(p19_acc)
+
+    p20 = p("20")
+    p20_clust, p20_acc = p20.cluster_3D()
+    accuracies.append(p20_acc)
+
+    p21 = p("21")
+    p21_clust, p21_acc = p21.cluster_3D()
+    accuracies.append(p21_acc)
+
+    p22 = p("22")
+    p14_clust, p22_acc = p22.cluster_3D()
+    accuracies.append(p22_acc)
+
+    p23 = p("23")
+    p23_clust, p23_acc = p23.cluster_3D()
+    accuracies.append(p23_acc)
+
+    p24 = p("24")
+    p24_clust, p24_acc = p24.cluster_3D()
+    accuracies.append(p24_acc)
+
+    p25 = p("25")
+    p25_clust, p25_acc = p25.cluster_3D()
+    accuracies.append(p25_acc)
+
+    p26 = p("26")
+    p26_clust, p26_acc = p26.cluster_3D()
+    accuracies.append(p26_acc)
+
+    p27 = p("27")
+    p27_clust, p27_acc = p27.cluster_3D()
+    accuracies.append(p27_acc)
+
+    p28 = p("28")
+    p28_clust, p28_acc = p28.cluster_3D()
+    accuracies.append(p28_acc)
+
+    p29 = p("29")
+    p29_clust, p29_acc = p29.cluster_3D()
+    accuracies.append(p29_acc)
+
+    p30 = p("30")
+    p30_clust, p30_acc = p30.cluster_3D()
+    accuracies.append(p30_acc)
+
+    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30]
 
     participant_clusters = [p1_clust, p2_clust, p3_clust, p4_clust, p5_clust, p6_clust, p7_clust, p8_clust, p9_clust, p10_clust]
 
@@ -129,13 +193,13 @@ if __name__ == "__main__":
     count1_right=0
     count2_right=0
     count3_right=0
-    for i in range(75*len(ind_participants)):
+    for i in range(75*30):
         if(all.labels[i]==1 and all_clusters[i]==1):count1_right+=1
         elif(all.labels[i]==2 and all_clusters[i]==2):count2_right+=1
         elif(all.labels[i]==3 and all_clusters[i]==3):count3_right+=1
     #visualize(trials_array, particp_array, all_clusters)
     nums=["1","2","3"]
-    count_arr=[count1_right/3.5,count2_right/3.5,count3_right/3.5]
+    count_arr=[count1_right/75,count2_right/75,count3_right/75]
     print(count_arr)
     plt.bar(nums, count_arr, alpha=0.7)
     plt.xlabel("Trial Type")
