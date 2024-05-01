@@ -48,7 +48,23 @@ def run_singles():
     p10_clust, p10_acc = p10.cluster_3D()
     accuracies.append(p10_acc)
 
-    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
+    p11 = p("11")
+    p11_clust, p11_acc = p11.cluster_3D()
+    accuracies.append(p11_acc)
+
+    p12 = p("12")
+    p12_clust, p12_acc = p12.cluster_3D()
+    accuracies.append(p12_acc)
+
+    p13 = p("13")
+    p13_clust, p13_acc = p13.cluster_3D()
+    accuracies.append(p13_acc)
+
+    p14 = p("14")
+    p14_clust, p14_acc = p14.cluster_3D()
+    accuracies.append(p14_acc)
+
+    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14]
 
     participant_clusters = [p1_clust, p2_clust, p3_clust, p4_clust, p5_clust, p6_clust, p7_clust, p8_clust, p9_clust, p10_clust]
 
@@ -101,30 +117,47 @@ if __name__ == "__main__":
     # A Participant containing all trials, all channels, all participants. Cluster by trial
     all_array, labels_array = get_all_participants(ind_participants)
 
+    p1 = p("01")
+    p1_clust, p1_acc = p1.cluster_3D()
+
     labels_array.reshape([1, len(ind_participants) * 75])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster_3D(40)
+    all_clusters, all_accuracy = all.cluster_3D(100)
     trials_array=np.tile(np.arange(1,76),10)
     particp_array=np.repeat(np.arange(1,11),75)
+    count1_right=0
+    count2_right=0
+    count3_right=0
+    for i in range(75*14):
+        if(all.labels[i]==1 and all_clusters[i]==1):count1_right+=1
+        elif(all.labels[i]==2 and all_clusters[i]==2):count2_right+=1
+        elif(all.labels[i]==3 and all_clusters[i]==3):count3_right+=1
     #visualize(trials_array, particp_array, all_clusters)
-    
-    plt.scatter(particp_array,all_clusters, c=all.labels)
-    plt.xlabel("Trial Number")
-    plt.ylabel("Percent clustering similarity")
+    nums=["1","2","3"]
+    count_arr=[count1_right/3.5,count2_right/3.5,count3_right/3.5]
+    print(count_arr)
+    plt.bar(nums, count_arr, alpha=0.7)
+    plt.xlabel("Trial Type")
+    plt.ylabel("Percent Right")
     plt.show()
 
-    channels, channel_labels = get_channel(np.array(ind_participants),1)
-    print(channels)
-    channel_indices=np.full(40,1)
-    for i in range (2,40):
-        channel, label=get_channel(np.array(ind_participants),i)
-        channels=np.append(channels, channel)
-        channel_labels=np.append(channel_labels, label)
-        channel_indices=np.append(channel_indices, np.full(40,i))
-    print(channels)
-    c = p('c', fv=channels, labels=channel_labels)
-    channel_clusters = c.cluster_2D(2)
-    print(channel_indices)
+    # plt.scatter(particp_array,all_clusters, c=all.labels)
+    # plt.xlabel("Trial Number")
+    # plt.ylabel("Percent clustering similarity")
+    # plt.show()
+
+    # channels, channel_labels = get_channel(np.array(ind_participants),1)
+    # print(channels)
+    # channel_indices=np.full(40,1)
+    # for i in range (2,40):
+    #     channel, label=get_channel(np.array(ind_participants),i)
+    #     channels=np.append(channels, channel)
+    #     channel_labels=np.append(channel_labels, label)
+    #     channel_indices=np.append(channel_indices, np.full(40,i))
+    # print(channels)
+    # c = p('c', fv=channels, labels=channel_labels)
+    # channel_clusters = c.cluster_2D(2)
+    # print(channel_indices)
     #plt.scatter(channel_indices, channel_labels, c=channel_clusters)
 
