@@ -193,16 +193,16 @@ if __name__ == "__main__":
     count1_right=0
     count2_right=0
     count3_right=0
-    for i in range(75*30):
-        if(all.labels[i]==1 and all_clusters[i]==1):count1_right+=1
-        elif(all.labels[i]==2 and all_clusters[i]==2):count2_right+=1
-        elif(all.labels[i]==3 and all_clusters[i]==3):count3_right+=1
+    for i in range(75):
+        if(p1.labels[i]==1 and p1_clust[i]==1):count1_right+=1
+        elif(p1.labels[i]==2 and p1_clust[i]==2):count2_right+=1
+        elif(p1.labels[i]==3 and p1_clust[i]==3):count3_right+=1
     #visualize(trials_array, particp_array, all_clusters)
-    nums=["1","2","3"]
-    count_arr=[count1_right/75,count2_right/75,count3_right/75]
+    nums=["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
+    count_arr=[count1_right/.25,count2_right/.25,count3_right/.25]
     print(count_arr)
     plt.bar(nums, count_arr, alpha=0.7)
-    plt.xlabel("Trial Type")
+    plt.xlabel("Action")
     plt.ylabel("Percent Right")
     plt.show()
 
