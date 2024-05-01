@@ -9,43 +9,43 @@ def run_singles():
     accuracies = []
 
     p1 = p("01")
-    p1_clust, p1_acc = p1.cluster()
+    p1_clust, p1_acc = p1.cluster_3D()
     accuracies.append(p1_acc)
 
     p2 = p("02")
-    p2_clust, p2_acc = p2.cluster()
+    p2_clust, p2_acc = p2.cluster_3D()
     accuracies.append(p2_acc)
 
     p3 = p("03")
-    p3_clust, p3_acc = p3.cluster()
+    p3_clust, p3_acc = p3.cluster_3D()
     accuracies.append(p3_acc)
 
     p4 = p("04")
-    p4_clust, p4_acc = p4.cluster()
+    p4_clust, p4_acc = p4.cluster_3D()
     accuracies.append(p4_acc)
 
     p5 = p("05")
-    p5_clust, p5_acc = p5.cluster()
+    p5_clust, p5_acc = p5.cluster_3D()
     accuracies.append(p5_acc)
 
     p6 = p("06")
-    p6_clust, p6_acc = p6.cluster()
+    p6_clust, p6_acc = p6.cluster_3D()
     accuracies.append(p6_acc)
 
     p7 = p("07")
-    p7_clust, p7_acc = p7.cluster()
+    p7_clust, p7_acc = p7.cluster_3D()
     accuracies.append(p7_acc)
 
     p8 = p("08")
-    p8_clust, p8_acc = p8.cluster()
+    p8_clust, p8_acc = p8.cluster_3D()
     accuracies.append(p8_acc)
 
     p9 = p("09")
-    p9_clust, p9_acc = p9.cluster()
+    p9_clust, p9_acc = p9.cluster_3D()
     accuracies.append(p9_acc)
 
     p10 = p("10")
-    p10_clust, p10_acc = p10.cluster()
+    p10_clust, p10_acc = p10.cluster_3D()
     accuracies.append(p10_acc)
 
     participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10]
@@ -103,7 +103,20 @@ if __name__ == "__main__":
     labels_array.reshape([1, len(ind_participants) * 75])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster(40)
+    all_clusters, all_accuracy = all.cluster_3D(40)
     trials_array=np.tile(np.arange(1,76),10)
-    visualize(trials_array, all.labels, all_clusters)
+    #visualize(trials_array, all.labels, all_clusters)
+
+    channels, channel_labels = get_channel(np.array(ind_participants),1)
+    channel_indices=np.full(40,1)
+    print(channel_indices)
+    for i in range (2,40):
+        channel, label=get_channel(np.array(ind_participants),i)
+        channels=np.append(channels, channel)
+        channel_labels=np.append(channel_labels, label)
+        channel_indices=np.append(channel_indices, np.full(40,i))
+    c = p('c', fv=channels, labels=channel_labels)
+    channel_clusters = c.cluster_3D(2)
+    print(channel_indices)
+    #plt.scatter(channel_indices, channel_labels, c=channel_clusters)
 
