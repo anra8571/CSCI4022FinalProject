@@ -15,12 +15,12 @@ class Participant:
         self.name = name
         self.fv = fv
 
-        if len(self.fv) == 0:
-            self.fv = self.load_struct()
-
         self.clusters = []
         self.accuracy = 0
 
+        # Some datasets are combinations of participants, in which the feature vector/labels is externally constructed and passed in as an argument
+        if len(self.fv) == 0:
+            self.fv = self.load_struct()
         if labels is None:
             self.labels = self.get_labels()
         else:
@@ -218,13 +218,35 @@ class Participant:
 
         # Accuracy = number of same labels / total number of labels
         correct = 0
+        one_c = 0
+        one_total = 0
+        two_c = 0
+        two_total = 0
+        three_c = 0
+        three_total = 0
+
         for i in range(len(self.labels)):
             if self.labels[i] == clusters[i]:
                 correct += 1
+                if self.labels[i] == 1:
+                    one_c += 1
+                elif self.labels[i] == 2:
+                    two_c += 1
+                elif self.labels[i] == 3:
+                    three_c += 1
+            if self.labels[i] == 1:
+                one_total += 1
+            elif self.labels[i] == 2:
+                two_total += 1
+            elif self.labels[i] == 3:
+                three_total += 1
 
         accuracy = correct/len(self.labels)
+        one_acc = one_c / one_total
+        two_acc = two_c / two_total
+        three_acc = three_c / three_total
 
-        return accuracy
+        return accuracy, one_acc, two_acc, three_acc
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
     def cluster_3D(self, k=25, labels=None):
@@ -237,7 +259,7 @@ class Participant:
         for i in range(k):
             # Clusters the data
             centroids, clusters, meanerror = self.kmeans_3D(self.fv)
-            acc = self.accuracy_calculation(clusters, labels)
+            acc, one, two, three = self.accuracy_calculation(clusters, labels)
 
             # If this is the best trial so far, save the data
             if acc > acc_high:
@@ -263,7 +285,7 @@ class Participant:
         for i in range(k):
             # Clusters the data
             centroids, clusters, meanerror = self.kmeans_2D(self.fv)
-            acc = self.accuracy_calculation(clusters, labels)
+            acc, one_acc, two_acc, three_acc = self.accuracy_calculation(clusters, labels)
 
         # If this is the best trial so far, save the data
         if acc > acc_high:
@@ -275,6 +297,8 @@ class Participant:
         self.clusters = clust_high
         self.accuracy = acc_high
 
-        print(f"The clustering accuracy is {self.accuracy * 100}")
+        print("Clusters: ", self.clusters)
+        print("  Labels: ", self.labels)
+        print(f"The clustering accuracy is {self.accuracy * 100} in total. One: {one_acc * 100}, two: {two_acc * 100}, three: {three_acc * 100}")
 
         return self.clusters, self.accuracy

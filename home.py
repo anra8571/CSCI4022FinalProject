@@ -129,7 +129,7 @@ if __name__ == "__main__":
     count1_right=0
     count2_right=0
     count3_right=0
-    for i in range(75*14):
+    for i in range(75*len(ind_participants)):
         if(all.labels[i]==1 and all_clusters[i]==1):count1_right+=1
         elif(all.labels[i]==2 and all_clusters[i]==2):count2_right+=1
         elif(all.labels[i]==3 and all_clusters[i]==3):count3_right+=1
