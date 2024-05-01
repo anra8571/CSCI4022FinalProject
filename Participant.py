@@ -88,7 +88,7 @@ class Participant:
         return np.sqrt(np.sum((slice1 - slice2)**2))
 
     # From homework in class
-    def kmeans(self, df, k=3, tol=0.0001):
+    def kmeans_3D(self, df, k=3, tol=0.0001):
         """
         K-means clustering for 3D data.
 
@@ -152,6 +152,65 @@ class Participant:
 
         return centroids, clusters, rec_error
     
+    def kmeans_2D(self, df, k=3, tol=0.0001):
+        """
+        K-means clustering for 2D data.
+
+        Parameters:
+            df (numpy.ndarray): 2D numpy array with shape (n, 2), each row treated as a point.
+            k (int): Number of clusters.
+            tol (float): Tolerance for L_2 convergence check on centroids.
+
+        Returns:
+            centroids (numpy.ndarray): Array of centroids, one for each cluster.
+            clusters (numpy.ndarray): Cluster assignment for each point.
+            rec_error (float): Reconstruction error on final iteration.
+        """    
+        # Initialize reconstruction error for 1st iteration
+        prev_rec_error = np.inf
+        
+        # Random centroids from data
+        clocs = np.random.choice(df.shape[0], size=k, replace=False)
+        centroids = df[clocs, :].copy()
+        
+        # Initialize objects for points-cluster distances and cluster assignments.
+        dists = np.zeros((k, df.shape[0]))
+        clusters = np.array([-1] * df.shape[0])
+        
+        # Index and convergence trackers
+        ii = 0
+        Done = False
+        while not Done:
+            # Update classifications
+            for ji in range(k):
+                for pi in range(df.shape[0]):
+                    dists[ji, pi] = np.linalg.norm(df[pi, :] - centroids[ji, :])
+            
+            clusters = dists.argmin(axis=0)
+            
+            # Update centroids
+            for ji in range(k):
+                if np.sum(clusters == ji) > 0:
+                    centroids[ji, :] = np.mean(df[clusters == ji], axis=0)
+                else:
+                    # Reinitialize centroid if no points are assigned to prevent empty clusters
+                    centroids[ji, :] = df[np.random.choice(df.shape[0], size=1), :]
+
+            # Calculate Reconstruction Error    
+            rec_error = np.sum(np.min(dists, axis=0)**2) / df.shape[0]
+            
+            # Convergence check
+            change_in_error = np.abs(prev_rec_error - rec_error)
+            if change_in_error < tol:
+                Done = True
+            elif ii == 50:
+                Done = True
+            
+            prev_rec_error = rec_error
+            ii += 1
+        
+        return centroids, clusters, rec_error
+    
     # Checks the clusters from k-means against the ground truth data
     def accuracy_calculation(self, clusters, labels):
         if labels is None:
@@ -168,7 +227,7 @@ class Participant:
         return accuracy
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
-    def cluster(self, k=25, labels=None):
+    def cluster_3D(self, k=25, labels=None):
         print(f"Clustering the data for {self.name} - running kmeans {k} times and taking the highest accuracy score")
 
         acc_high = 0
@@ -177,7 +236,7 @@ class Participant:
 
         for i in range(k):
             # Clusters the data
-            centroids, clusters, meanerror = self.kmeans(self.fv)
+            centroids, clusters, meanerror = self.kmeans_3D(self.fv)
             acc = self.accuracy_calculation(clusters, labels)
 
             # If this is the best trial so far, save the data
@@ -186,6 +245,32 @@ class Participant:
                 acc_high = acc
                 mean_low = meanerror
         
+        # At the end, save the data to the object and print the final score
+        self.clusters = clust_high
+        self.accuracy = acc_high
+
+        print(f"The clustering accuracy is {self.accuracy * 100}")
+
+        return self.clusters, self.accuracy
+    
+    def cluster_2D(self, k=25, labels=None):
+        print(f"Clustering the data for {self.name} - running kmeans {k} times and taking the highest accuracy score")
+
+        acc_high = 0
+        clust_high = np.array([])
+        mean_low = 0
+
+        for i in range(k):
+            # Clusters the data
+            centroids, clusters, meanerror = self.kmeans_2D(self.fv)
+            acc = self.accuracy_calculation(clusters, labels)
+
+        # If this is the best trial so far, save the data
+        if acc > acc_high:
+            clust_high = clusters
+            acc_high = acc
+            mean_low = meanerror
+
         # At the end, save the data to the object and print the final score
         self.clusters = clust_high
         self.accuracy = acc_high
