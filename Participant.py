@@ -249,7 +249,7 @@ class Participant:
         return accuracy, one_acc, two_acc, three_acc
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
-    def cluster_3D(self, k=25, labels=None):
+    def cluster(self, k=25, labels=None):
         print(f"Clustering the data for {self.name} - running kmeans {k} times and taking the highest accuracy score")
 
         acc_high = 0
@@ -272,33 +272,5 @@ class Participant:
         self.accuracy = acc_high
 
         print(f"The clustering accuracy is {self.accuracy * 100}")
-
-        return self.clusters, self.accuracy
-    
-    def cluster_2D(self, k=25, labels=None):
-        print(f"Clustering the data for {self.name} - running kmeans {k} times and taking the highest accuracy score")
-
-        acc_high = 0
-        clust_high = np.array([])
-        mean_low = 0
-
-        for i in range(k):
-            # Clusters the data
-            centroids, clusters, meanerror = self.kmeans_2D(self.fv)
-            acc, one_acc, two_acc, three_acc = self.accuracy_calculation(clusters, labels)
-
-        # If this is the best trial so far, save the data
-        if acc > acc_high:
-            clust_high = clusters
-            acc_high = acc
-            mean_low = meanerror
-
-        # At the end, save the data to the object and print the final score
-        self.clusters = clust_high
-        self.accuracy = acc_high
-
-        print("Clusters: ", self.clusters)
-        print("  Labels: ", self.labels)
-        print(f"The clustering accuracy is {self.accuracy * 100} in total. One: {one_acc * 100}, two: {two_acc * 100}, three: {three_acc * 100}")
 
         return self.clusters, self.accuracy

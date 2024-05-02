@@ -9,132 +9,130 @@ def run_singles():
     accuracies = []
 
     p1 = p("01")
-    p1_clust, p1_acc = p1.cluster_3D()
+    p1_clust, p1_acc = p1.cluster()
     accuracies.append(p1_acc)
 
     p2 = p("02")
-    p2_clust, p2_acc = p2.cluster_3D()
+    p2_clust, p2_acc = p2.cluster()
     accuracies.append(p2_acc)
 
     p3 = p("03")
-    p3_clust, p3_acc = p3.cluster_3D()
+    p3_clust, p3_acc = p3.cluster()
     accuracies.append(p3_acc)
 
     p4 = p("04")
-    p4_clust, p4_acc = p4.cluster_3D()
+    p4_clust, p4_acc = p4.cluster()
     accuracies.append(p4_acc)
 
     p5 = p("05")
-    p5_clust, p5_acc = p5.cluster_3D()
+    p5_clust, p5_acc = p5.cluster()
     accuracies.append(p5_acc)
 
     p6 = p("06")
-    p6_clust, p6_acc = p6.cluster_3D()
+    p6_clust, p6_acc = p6.cluster()
     accuracies.append(p6_acc)
 
     p7 = p("07")
-    p7_clust, p7_acc = p7.cluster_3D()
+    p7_clust, p7_acc = p7.cluster()
     accuracies.append(p7_acc)
 
     p8 = p("08")
-    p8_clust, p8_acc = p8.cluster_3D()
+    p8_clust, p8_acc = p8.cluster()
     accuracies.append(p8_acc)
 
     p9 = p("09")
-    p9_clust, p9_acc = p9.cluster_3D()
+    p9_clust, p9_acc = p9.cluster()
     accuracies.append(p9_acc)
 
     p10 = p("10")
-    p10_clust, p10_acc = p10.cluster_3D()
+    p10_clust, p10_acc = p10.cluster()
     accuracies.append(p10_acc)
 
     p11 = p("11")
-    p11_clust, p11_acc = p11.cluster_3D()
+    p11_clust, p11_acc = p11.cluster()
     accuracies.append(p11_acc)
 
     p12 = p("12")
-    p12_clust, p12_acc = p12.cluster_3D()
+    p12_clust, p12_acc = p12.cluster()
     accuracies.append(p12_acc)
 
     p13 = p("13")
-    p13_clust, p13_acc = p13.cluster_3D()
+    p13_clust, p13_acc = p13.cluster()
     accuracies.append(p13_acc)
 
     p14 = p("14")
-    p14_clust, p14_acc = p14.cluster_3D()
+    p14_clust, p14_acc = p14.cluster()
     accuracies.append(p14_acc)
 
     p15 = p("15")
-    p15_clust, p15_acc = p15.cluster_3D()
+    p15_clust, p15_acc = p15.cluster()
     accuracies.append(p15_acc)
 
     p16 = p("16")
-    p16_clust, p16_acc = p16.cluster_3D()
+    p16_clust, p16_acc = p16.cluster()
     accuracies.append(p16_acc)
 
     p17 = p("17")
-    p17_clust, p17_acc = p17.cluster_3D()
+    p17_clust, p17_acc = p17.cluster()
     accuracies.append(p17_acc)
 
     p18 = p("18")
-    p18_clust, p18_acc = p18.cluster_3D()
+    p18_clust, p18_acc = p18.cluster()
     accuracies.append(p18_acc)
 
     p19 = p("19")
-    p19_clust, p19_acc = p19.cluster_3D()
+    p19_clust, p19_acc = p19.cluster()
     accuracies.append(p19_acc)
 
     p20 = p("20")
-    p20_clust, p20_acc = p20.cluster_3D()
+    p20_clust, p20_acc = p20.cluster()
     accuracies.append(p20_acc)
 
     p21 = p("21")
-    p21_clust, p21_acc = p21.cluster_3D()
+    p21_clust, p21_acc = p21.cluster()
     accuracies.append(p21_acc)
 
     p22 = p("22")
-    p14_clust, p22_acc = p22.cluster_3D()
+    p14_clust, p22_acc = p22.cluster()
     accuracies.append(p22_acc)
 
     p23 = p("23")
-    p23_clust, p23_acc = p23.cluster_3D()
+    p23_clust, p23_acc = p23.cluster()
     accuracies.append(p23_acc)
 
     p24 = p("24")
-    p24_clust, p24_acc = p24.cluster_3D()
+    p24_clust, p24_acc = p24.cluster()
     accuracies.append(p24_acc)
 
     p25 = p("25")
-    p25_clust, p25_acc = p25.cluster_3D()
+    p25_clust, p25_acc = p25.cluster()
     accuracies.append(p25_acc)
 
     p26 = p("26")
-    p26_clust, p26_acc = p26.cluster_3D()
+    p26_clust, p26_acc = p26.cluster()
     accuracies.append(p26_acc)
 
     p27 = p("27")
-    p27_clust, p27_acc = p27.cluster_3D()
+    p27_clust, p27_acc = p27.cluster()
     accuracies.append(p27_acc)
 
     p28 = p("28")
-    p28_clust, p28_acc = p28.cluster_3D()
+    p28_clust, p28_acc = p28.cluster()
     accuracies.append(p28_acc)
 
     p29 = p("29")
-    p29_clust, p29_acc = p29.cluster_3D()
+    p29_clust, p29_acc = p29.cluster()
     accuracies.append(p29_acc)
 
     p30 = p("30")
-    p30_clust, p30_acc = p30.cluster_3D()
+    p30_clust, p30_acc = p30.cluster()
     accuracies.append(p30_acc)
 
-    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14,p15,p16,p17,p18,p19,p20,p21,p22,p23,p24,p25,p26,p27,p28,p29,p30]
-
-    participant_clusters = [p1_clust, p2_clust, p3_clust, p4_clust, p5_clust, p6_clust, p7_clust, p8_clust, p9_clust, p10_clust]
+    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30]
 
     print(f"Accuracies for the {len(participant_array)} participants: {accuracies}")
 
-    return participant_array
+    return participant_array, accuracies
 
 # Input: participants is an array of all the participants loaded
 # Input: channel is an integer between 1-40 indicating which channel to pull
@@ -163,16 +161,31 @@ def get_all_participants(participants):
 
     return np.array(p_array), np.array(labels_array)
 
-def visualize(x,y,cluster):
-    plt.colorbar(plt.scatter(x,y,c=cluster))
+def visualize(x, y, cluster):
+    plt.colorbar(plt.scatter(x, y, c=cluster))
     plt.legend()
     plt.xlabel("Trial Number")
     plt.ylabel("Participant Number")
     plt.show()
 
 if __name__ == "__main__":
+    # Paths
+    visualization_path = './Visualizations/'
+
+    # Parameters
+    num_participants = 30
+    num_trials = 75
+
     # Gets array of all the individual participants clustered by trial
-    ind_participants = run_singles()
+    ind_participants, ind_accuracies = run_singles()
+
+    # Graphs the accuracy for each partcipant
+    fix, ax = plt.subplots()
+    participants = np.linspace(1, num_participants, num=num_participants)
+    ax.bar(participants, ind_accuracies)
+    ax.set_ylabel("Accuracy")
+    plt.savefig(visualization_path + 'Accuracies by Individual Participant')
+    plt.clf()
 
     # A Participant containing data for channel 1 across all participants, all trials
     c1_array, c1_labels = get_channel(np.array(ind_participants), 1)
@@ -182,46 +195,27 @@ if __name__ == "__main__":
     all_array, labels_array = get_all_participants(ind_participants)
 
     p1 = p("01")
-    p1_clust, p1_acc = p1.cluster_3D()
+    p1_clust, p1_acc = p1.cluster()
 
-    labels_array.reshape([1, len(ind_participants) * 75])
+    # Plotting the accuracy by activity type
+    labels_array.reshape([1, len(ind_participants) * num_trials])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster_3D(100)
-    trials_array=np.tile(np.arange(1,76),10)
-    particp_array=np.repeat(np.arange(1,11),75)
-    count1_right=0
-    count2_right=0
-    count3_right=0
-    for i in range(75):
-        if(p1.labels[i]==1 and p1_clust[i]==1):count1_right+=1
-        elif(p1.labels[i]==2 and p1_clust[i]==2):count2_right+=1
-        elif(p1.labels[i]==3 and p1_clust[i]==3):count3_right+=1
+    all_clusters, all_accuracy = all.cluster(100)
+    trials_array = np.tile(np.arange(1,76), 10)
+    particp_array = np.repeat(np.arange(1,11), 75)
+    count1_right = 0
+    count2_right = 0
+    count3_right = 0
+    for i in range(num_trials):
+        if(p1.labels[i]==1 and p1_clust[i]==1): count1_right+=1
+        elif(p1.labels[i]==2 and p1_clust[i]==2): count2_right+=1
+        elif(p1.labels[i]==3 and p1_clust[i]==3): count3_right+=1
     #visualize(trials_array, particp_array, all_clusters)
-    nums=["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
-    count_arr=[count1_right/.25,count2_right/.25,count3_right/.25]
+    nums = ["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
+    count_arr = [count1_right/.25, count2_right/.25, count3_right/.25]
     print(count_arr)
     plt.bar(nums, count_arr, alpha=0.7)
     plt.xlabel("Action")
     plt.ylabel("Percent Right")
-    plt.show()
-
-    # plt.scatter(particp_array,all_clusters, c=all.labels)
-    # plt.xlabel("Trial Number")
-    # plt.ylabel("Percent clustering similarity")
-    # plt.show()
-
-    # channels, channel_labels = get_channel(np.array(ind_participants),1)
-    # print(channels)
-    # channel_indices=np.full(40,1)
-    # for i in range (2,40):
-    #     channel, label=get_channel(np.array(ind_participants),i)
-    #     channels=np.append(channels, channel)
-    #     channel_labels=np.append(channel_labels, label)
-    #     channel_indices=np.append(channel_indices, np.full(40,i))
-    # print(channels)
-    # c = p('c', fv=channels, labels=channel_labels)
-    # channel_clusters = c.cluster_2D(2)
-    # print(channel_indices)
-    #plt.scatter(channel_indices, channel_labels, c=channel_clusters)
-
+    plt.savefig(visualization_path + 'Accuracy by Activity Type')
