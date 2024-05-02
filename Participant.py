@@ -152,65 +152,6 @@ class Participant:
 
         return centroids, clusters, rec_error
     
-    def kmeans_2D(self, df, k=3, tol=0.0001):
-        """
-        K-means clustering for 2D data.
-
-        Parameters:
-            df (numpy.ndarray): 2D numpy array with shape (n, 2), each row treated as a point.
-            k (int): Number of clusters.
-            tol (float): Tolerance for L_2 convergence check on centroids.
-
-        Returns:
-            centroids (numpy.ndarray): Array of centroids, one for each cluster.
-            clusters (numpy.ndarray): Cluster assignment for each point.
-            rec_error (float): Reconstruction error on final iteration.
-        """    
-        # Initialize reconstruction error for 1st iteration
-        prev_rec_error = np.inf
-        
-        # Random centroids from data
-        clocs = np.random.choice(df.shape[0], size=k, replace=False)
-        centroids = df[clocs, :].copy()
-        
-        # Initialize objects for points-cluster distances and cluster assignments.
-        dists = np.zeros((k, df.shape[0]))
-        clusters = np.array([-1] * df.shape[0])
-        
-        # Index and convergence trackers
-        ii = 0
-        Done = False
-        while not Done:
-            # Update classifications
-            for ji in range(k):
-                for pi in range(df.shape[0]):
-                    dists[ji, pi] = np.linalg.norm(df[pi, :] - centroids[ji, :])
-            
-            clusters = dists.argmin(axis=0)
-            
-            # Update centroids
-            for ji in range(k):
-                if np.sum(clusters == ji) > 0:
-                    centroids[ji, :] = np.mean(df[clusters == ji], axis=0)
-                else:
-                    # Reinitialize centroid if no points are assigned to prevent empty clusters
-                    centroids[ji, :] = df[np.random.choice(df.shape[0], size=1), :]
-
-            # Calculate Reconstruction Error    
-            rec_error = np.sum(np.min(dists, axis=0)**2) / df.shape[0]
-            
-            # Convergence check
-            change_in_error = np.abs(prev_rec_error - rec_error)
-            if change_in_error < tol:
-                Done = True
-            elif ii == 50:
-                Done = True
-            
-            prev_rec_error = rec_error
-            ii += 1
-        
-        return centroids, clusters, rec_error
-    
     # Checks the clusters from k-means against the ground truth data
     def accuracy_calculation(self, clusters, labels):
         if labels is None:
@@ -271,6 +212,6 @@ class Participant:
         self.clusters = clust_high
         self.accuracy = acc_high
 
-        print(f"The clustering accuracy is {self.accuracy * 100}")
+        print(f"The clustering accuracy for {self.name} is {self.accuracy * 100}")
 
         return self.clusters, self.accuracy

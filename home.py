@@ -2,6 +2,14 @@ from Participant import Participant as p
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Paths
+visualization_path = './Visualizations/'
+
+# Parameters
+num_participants = 30
+num_trials = 75
+k = 25
+
 # Run each participant as a separate set, getting the clustering accuracy for each and comparing it to the LOOCV accuracy
 def run_singles():
     # LOOCV: 0.826667, 0.533333, 0.573333, 0.960000, 0.53333, 0.786667, 0.760000, 0.746667, 0.666667, 0.853333
@@ -168,22 +176,42 @@ def visualize(x, y, cluster):
     plt.ylabel("Participant Number")
     plt.show()
 
+def plot_by_activity(participant, name):
+    nums = ["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
+    labels = participant.labels
+    clusters = participant.clusters
+
+    # Counting accuracy
+    count1_right = 0
+    count2_right = 0
+    count3_right = 0
+
+    for i in range(num_trials):
+        if(labels[i]==1 and clusters[i]==1): count1_right += 1
+        elif(labels[i]==2 and clusters[i]==2): count2_right += 1
+        elif(labels[i]==3 and clusters[i]==3): count3_right += 1
+    
+    # The study divides the activities evenly - each participant should have 25 right-hand, 25 left-hand, and 25 foot-tapping
+    count_arr = [count1_right/.25, count2_right/.25, count3_right/.25]
+    print(f"Accuracies by Activity for {participant.name}: {count_arr}")
+    plt.bar(nums, count_arr, alpha=0.7)
+    plt.xlabel("Activity")
+    plt.ylabel("Accuracy")
+    plt.savefig(f"{visualization_path}/{name}")
+    plt.clf()
+
 if __name__ == "__main__":
-    # Paths
-    visualization_path = './Visualizations/'
-
-    # Parameters
-    num_participants = 30
-    num_trials = 75
-
     # Gets array of all the individual participants clustered by trial
     ind_participants, ind_accuracies = run_singles()
 
-    # Graphs the accuracy for each partcipant
+    # Graphs the accuracy for each partcipant compared to random chance (they all beat random chance yay)
     fix, ax = plt.subplots()
     participants = np.linspace(1, num_participants, num=num_participants)
-    ax.bar(participants, ind_accuracies)
+    ax.bar(participants, ind_accuracies, label="Accuracy")
     ax.set_ylabel("Accuracy")
+    x1, y1 = [1, len(ind_participants)], [1/3, 1/3]
+    ax.plot(x1, y1, 'r', label="Random Chance")
+    ax.legend()
     plt.savefig(visualization_path + 'Accuracies by Individual Participant')
     plt.clf()
 
@@ -193,29 +221,10 @@ if __name__ == "__main__":
 
     # A Participant containing all trials, all channels, all participants. Cluster by trial
     all_array, labels_array = get_all_participants(ind_participants)
-
-    p1 = p("01")
-    p1_clust, p1_acc = p1.cluster()
-
-    # Plotting the accuracy by activity type
-    labels_array.reshape([1, len(ind_participants) * num_trials])
     all = p("all", fv=all_array, labels=labels_array)
     all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster(100)
-    trials_array = np.tile(np.arange(1,76), 10)
-    particp_array = np.repeat(np.arange(1,11), 75)
-    count1_right = 0
-    count2_right = 0
-    count3_right = 0
-    for i in range(num_trials):
-        if(p1.labels[i]==1 and p1_clust[i]==1): count1_right+=1
-        elif(p1.labels[i]==2 and p1_clust[i]==2): count2_right+=1
-        elif(p1.labels[i]==3 and p1_clust[i]==3): count3_right+=1
-    #visualize(trials_array, particp_array, all_clusters)
-    nums = ["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
-    count_arr = [count1_right/.25, count2_right/.25, count3_right/.25]
-    print(count_arr)
-    plt.bar(nums, count_arr, alpha=0.7)
-    plt.xlabel("Action")
-    plt.ylabel("Percent Right")
-    plt.savefig(visualization_path + 'Accuracy by Activity Type')
+    all_clusters, all_accuracy = all.cluster(k)
+
+    # Plot the accuracy for all participants by activity
+    plot_by_activity(ind_participants[0], f'Accuracy for {ind_participants[0].name} by Activity')
+    plot_by_activity(all, 'Accuracy by Activity Type')
