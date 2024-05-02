@@ -2,8 +2,9 @@
 
 import os
 from os.path import dirname, join as pjoin
-import scipy.io as sio
-import numpy as np
+import scipy.io as sio  # type: ignore
+import numpy as np # type: ignore
+from scipy import stats # type: ignore
 
 # Represents the data from one participant
 class Participant:
@@ -155,7 +156,7 @@ class Participant:
     # Checks the clusters from k-means against the ground truth data
     def accuracy_calculation(self, clusters, labels):
         if labels is None:
-            labels 
+            labels  # type: ignore
 
         # Accuracy = number of same labels / total number of labels
         correct = 0
@@ -215,3 +216,49 @@ class Participant:
         print(f"The clustering accuracy for {self.name} is {self.accuracy * 100}")
 
         return self.clusters, self.accuracy
+    
+    def GMM(self, dat, k):
+        # Flatten the last two dimensions
+        if dat.ndim > 2:
+            dat = dat.reshape(dat.shape[0], -1)  # Reshaping to (75, 120)
+
+        # Number of samples and features
+        num_samples, num_features = dat.shape
+
+        # Initialize GMM parameters
+        p_class = np.zeros(k)
+        means = np.zeros((k, num_features))
+        covars = np.zeros((k, num_features, num_features))
+        p_data_given_class = np.zeros((num_samples, k))
+        mean_dist = np.array(0)
+
+        # Initialize the means with random samples
+        init_idx = np.random.choice(range(num_samples), size=k, replace=False)
+        for dim in range(k):
+            covars[dim, :, :] = np.cov(dat.T)
+            means[dim, :] = dat[init_idx[dim]]
+            p_class[dim] = 1 / k
+
+        # Expectation-Maximization steps
+        for step in range(50):
+            for dim in range(k):
+                p_data_given_class[:, dim] = stats.multivariate_normal.pdf(dat, mean=means[dim], cov=covars[dim])
+
+            p_class_given_data = p_data_given_class * p_class
+            sums = np.sum(p_class_given_data, axis=1)
+            p_class_given_data = (p_class_given_data.T / sums).T
+
+            n_class = np.sum(p_class_given_data, axis=0)
+            p_class = n_class / num_samples
+
+            for dim in range(k):
+                weighted_data = dat.T * p_class_given_data[:, dim]
+                means[dim] = np.sum(weighted_data, axis=1) / n_class[dim]
+                centered_data = dat - means[dim]
+                covars[dim] = np.dot(centered_data.T * p_class_given_data[:, dim], centered_data) / n_class[dim]
+
+        # Calculate mean distance
+        mean_dist = sum(np.sqrt(np.sum((means[dim] - dat[i]) ** 2) * p_class_given_data[i, dim])
+                        for i in range(num_samples) for dim in range(k)) / (num_samples * k)
+
+        return p_class_given_data, means, covars, p_class, mean_dist

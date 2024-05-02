@@ -1,8 +1,7 @@
 from Participant import Participant as p
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import scipy.io as sio
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
+import scipy.io as sio # type: ignore
 
 # Paths
 visualization_path = './Visualizations/'
@@ -343,7 +342,7 @@ def plot_by_activity(participant, name):
         elif(labels[i]==3 and clusters[i]==3): count3_right += 1
     
     # The study divides the activities evenly - each participant should have 25 right-hand, 25 left-hand, and 25 foot-tapping
-    count_arr = [count1_right/.25, count2_right/.25, count3_right/.25]
+    count_arr = [count1_right/25, count2_right/25, count3_right/25]
     print(f"Accuracies by Activity for {participant.name}: {count_arr}")
     plt.bar(nums, count_arr, alpha=0.7)
     plt.xlabel("Activity")
