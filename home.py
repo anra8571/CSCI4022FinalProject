@@ -1,6 +1,8 @@
 from Participant import Participant as p
 import numpy as np
 import matplotlib.pyplot as plt
+import sys
+import scipy.io as sio
 
 # Paths
 visualization_path = './Visualizations/'
@@ -9,6 +11,10 @@ visualization_path = './Visualizations/'
 num_participants = 30
 num_trials = 75
 k = 25
+
+# Printing Options - if toggled, prints output to file
+# np.set_printoptions(threshold=sys.maxsize)
+# sys.stdout = open('output.txt', 'wt')
 
 # Run each participant as a separate set, getting the clustering accuracy for each and comparing it to the LOOCV accuracy
 def run_singles():
@@ -142,6 +148,149 @@ def run_singles():
 
     return participant_array, accuracies
 
+def run_channels(individuals):
+    channels_array = []
+    accuracies = []
+
+    c1_array, c1_labels = get_channel(individuals, 1)
+    print("C1 array: ", c1_array)
+    print("C1 labels: ", c1_labels)
+    c1 = p("c1", fv=c1_array, labels=c1_labels)
+    c1_clust, c1_acc = c1.cluster()
+    channels_array.append(c1)
+    accuracies.append(c1_acc)
+
+    c2_array, c2_labels = get_channel(individuals, 2)
+    c2 = p("c2", fv=c2_array, labels=c2_labels)
+    c2_clust, c2_acc = c2.cluster()
+    channels_array.append(c2)
+    accuracies.append(c2_acc)
+
+    c3_array, c3_labels = get_channel(individuals, 3)
+    c3 = p("c3", fv=c3_array, labels=c3_labels)
+    c3_clust, c3_acc = c3.cluster()
+    channels_array.append(c3)
+    accuracies.append(c3_acc)
+
+    c4_array, c4_labels = get_channel(individuals, 4)
+    c4 = p("c4", fv=c4_array, labels=c4_labels)
+    c4_clust, c4_acc = c4.cluster()
+    channels_array.append(c4)
+    accuracies.append(c4_acc)
+
+    c5_array, c5_labels = get_channel(individuals, 5)
+    c5 = p("c5", fv=c5_array, labels=c5_labels)
+    c5_clust, c5_acc = c5.cluster()
+    channels_array.append(c5)
+    accuracies.append(c5_acc)
+
+    c6_array, c6_labels = get_channel(individuals, 6)
+    c6 = p("c6", fv=c6_array, labels=c6_labels)
+    c6_clust, c6_acc = c6.cluster()
+    channels_array.append(c6)
+    accuracies.append(c6_acc)
+
+    c7_array, c7_labels = get_channel(individuals, 7)
+    c7 = p("c7", fv=c7_array, labels=c7_labels)
+    c7_clust, c7_acc = c7.cluster()
+    channels_array.append(c7)
+    accuracies.append(c7_acc)
+
+    c8_array, c8_labels = get_channel(individuals, 8)
+    c8 = p("c8", fv=c8_array, labels=c8_labels)
+    c8_clust, c8_acc = c8.cluster()
+    channels_array.append(c8)
+    accuracies.append(c8_acc)
+
+    c9_array, c9_labels = get_channel(individuals, 9)
+    c9 = p("c9", fv=c9_array, labels=c9_labels)
+    c9_clust, c9_acc = c9.cluster()
+    channels_array.append(c9)
+    accuracies.append(c9_acc)
+
+    c10_array, c10_labels = get_channel(individuals, 10)
+    c10 = p("c10", fv=c10_array, labels=c10_labels)
+    c10_clust, c10_acc = c10.cluster()
+    channels_array.append(c10)
+    accuracies.append(c10_acc)
+
+    c11_array, c11_labels = get_channel(individuals, 11)
+    c11 = p("c11", fv=c11_array, labels=c11_labels)
+    c11_clust, c11_acc = c11.cluster()
+    channels_array.append(c11)
+    accuracies.append(c11_acc)
+
+    c12_array, c12_labels = get_channel(individuals, 12)
+    c12 = p("c12", fv=c12_array, labels=c12_labels)
+    c12_clust, c12_acc = c12.cluster()
+    channels_array.append(c12)
+    accuracies.append(c12_acc)
+
+    c13_array, c13_labels = get_channel(individuals, 13)
+    c13 = p("c13", fv=c13_array, labels=c13_labels)
+    c13_clust, c13_acc = c13.cluster()
+    channels_array.append(c13)
+    accuracies.append(c13_acc)
+
+    c14_array, c14_labels = get_channel(individuals, 14)
+    c14 = p("c14", fv=c14_array, labels=c14_labels)
+    c14_clust, c14_acc = c14.cluster()
+    channels_array.append(c14)
+    accuracies.append(c14_acc)
+
+    c15_array, c15_labels = get_channel(individuals, 15)
+    c15 = p("c15", fv=c15_array, labels=c15_labels)
+    c15_clust, c15_acc = c15.cluster()
+    channels_array.append(c15)
+    accuracies.append(c15_acc)
+
+    c16_array, c16_labels = get_channel(individuals, 16)
+    c16 = p("c16", fv=c16_array, labels=c16_labels)
+    c16_clust, c16_acc = c16.cluster()
+    channels_array.append(c16)
+    accuracies.append(c16_acc)
+
+    c17_array, c17_labels = get_channel(individuals, 17)
+    c17 = p("c17", fv=c17_array, labels=c17_labels)
+    c17_clust, c17_acc = c17.cluster()
+    channels_array.append(c17)
+    accuracies.append(c17_acc)
+
+    c18_array, c18_labels = get_channel(individuals, 18)
+    c18 = p("c18", fv=c18_array, labels=c18_labels)
+    c18_clust, c18_acc = c18.cluster()
+    channels_array.append(c18)
+    accuracies.append(c18_acc)
+
+    c19_array, c19_labels = get_channel(individuals, 19)
+    c19 = p("c19", fv=c19_array, labels=c19_labels)
+    c19_clust, c19_acc = c19.cluster()
+    channels_array.append(c19)
+    accuracies.append(c19_acc)
+
+    c20_array, c20_labels = get_channel(individuals, 20)
+    c20 = p("c20", fv=c20_array, labels=c20_labels)
+    c20_clust, c20_acc = c20.cluster()
+    channels_array.append(c20)
+    accuracies.append(c20_acc)
+
+    return channels_array, accuracies
+
+# Get the ground truth labels from the MATLAB file
+def get_channel_names():
+    # Load the labels
+    mnt = sio.loadmat(f'Data/mnt.mat')
+    # print(mnt['mnt']['clab'])
+
+    # Convert from MATLAB struct to np array
+    channel_names = []
+    for elem in mnt['mnt']['clab'][0][0]:
+        for channel in elem:
+            channel_names.append(channel[0])
+
+    print("C Names: ", channel_names)
+    return channel_names
+
 # Input: participants is an array of all the participants loaded
 # Input: channel is an integer between 1-40 indicating which channel to pull
 def get_channel(participants, channel):
@@ -151,12 +300,13 @@ def get_channel(participants, channel):
     for p in participants:
         for trial in range(0, len(p.fv)):
             # Account for Python being 0-indexed
-            channel_array.append(p.fv[trial, channel - 1, :])
+            channel_array.append([p.fv[trial, channel - 1, :]])
         for elem in p.labels:
             labels_array.append(elem)
 
     return np.array(channel_array), np.array(labels_array)
 
+# Combines data across all participants
 def get_all_participants(participants):
     p_array = []
     labels_array = []
@@ -176,6 +326,7 @@ def visualize(x, y, cluster):
     plt.ylabel("Participant Number")
     plt.show()
 
+# Plots the accuracy by activity
 def plot_by_activity(participant, name):
     nums = ["Right-Hand Tapping","Left-Hand Tapping","Foot Tapping"]
     labels = participant.labels
@@ -200,24 +351,31 @@ def plot_by_activity(participant, name):
     plt.savefig(f"{visualization_path}/{name}")
     plt.clf()
 
+# Plots accuracy by participant or channel
+def plot_accuracies(accuracy, name):
+    # Graphs the accuracy for each participant or channel compared to random chance (they all beat random chance yay)
+    fix, ax = plt.subplots()
+    participants = np.linspace(1, len(accuracy), num=len(accuracy))
+    ax.bar(participants, accuracy, label="Accuracy")
+    ax.set_ylabel("Accuracy")
+    x1, y1 = [1, len(accuracy)], [1/3, 1/3]
+    ax.plot(x1, y1, 'r', label="Random Chance")
+    ax.legend()
+    plt.savefig(f'{visualization_path}/{name}')
+    plt.clf()
+
 if __name__ == "__main__":
     # Gets array of all the individual participants clustered by trial
     ind_participants, ind_accuracies = run_singles()
 
     # Graphs the accuracy for each partcipant compared to random chance (they all beat random chance yay)
-    fix, ax = plt.subplots()
-    participants = np.linspace(1, num_participants, num=num_participants)
-    ax.bar(participants, ind_accuracies, label="Accuracy")
-    ax.set_ylabel("Accuracy")
-    x1, y1 = [1, len(ind_participants)], [1/3, 1/3]
-    ax.plot(x1, y1, 'r', label="Random Chance")
-    ax.legend()
-    plt.savefig(visualization_path + 'Accuracies by Individual Participant')
-    plt.clf()
+    plot_accuracies(ind_accuracies, 'Accuracies by Individual Participant')
 
-    # A Participant containing data for channel 1 across all participants, all trials
-    c1_array, c1_labels = get_channel(np.array(ind_participants), 1)
-    c1 = p("c1", fv=c1_array, labels=c1_labels)
+    # A Participant containing data for first 20 channels across all participants, all trials
+    channels_array, channels_accuracy = run_channels(np.array(ind_participants))
+
+    # Graphs the accuracy by channel
+    plot_accuracies(channels_accuracy, 'Accuracies by Individual Channel')
 
     # A Participant containing all trials, all channels, all participants. Cluster by trial
     all_array, labels_array = get_all_participants(ind_participants)
@@ -225,6 +383,6 @@ if __name__ == "__main__":
     all.labels = labels_array
     all_clusters, all_accuracy = all.cluster(k)
 
-    # Plot the accuracy for all participants by activity
+    # # Plot the accuracy for all participants by activity
     plot_by_activity(ind_participants[0], f'Accuracy for {ind_participants[0].name} by Activity')
     plot_by_activity(all, 'Accuracy by Activity Type')
