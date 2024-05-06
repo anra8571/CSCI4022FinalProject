@@ -2,6 +2,7 @@ from Participant import Participant as p
 import numpy as np # type: ignore
 import matplotlib.pyplot as plt # type: ignore
 import scipy.io as sio # type: ignore
+from sklearn.decomposition import PCA
 
 # Paths
 visualization_path = './Visualizations/'
@@ -275,6 +276,103 @@ def run_channels(individuals):
 
     return channels_array, accuracies
 
+def run_GMM():
+    # LOOCV: 0.826667, 0.533333, 0.573333, 0.960000, 0.53333, 0.786667, 0.760000, 0.746667, 0.666667, 0.853333
+    # Participant: 1      2         3          4        5         6         7         8         9        10
+
+    p1 = p("01")
+    p1_clust, p1_acc = p1.cluster()
+
+    p2 = p("02")
+    p2_clust, p2_acc = p2.cluster()
+
+    p3 = p("03")
+    p3_clust, p3_acc = p3.cluster()
+
+    p4 = p("04")
+    p4_clust, p4_acc = p4.cluster()
+
+    p5 = p("05")
+    p5_clust, p5_acc = p5.cluster()
+
+    p6 = p("06")
+    p6_clust, p6_acc = p6.cluster()
+
+    p7 = p("07")
+    p7_clust, p7_acc = p7.cluster()
+
+    p8 = p("08")
+    p8_clust, p8_acc = p8.cluster()
+
+    p9 = p("09")
+    p9_clust, p9_acc = p9.cluster()
+
+    p10 = p("10")
+    p10_clust, p10_acc = p10.cluster()
+
+    p11 = p("11")
+    p11_clust, p11_acc = p11.cluster()
+
+    p12 = p("12")
+    p12_clust, p12_acc = p12.cluster()
+
+    p13 = p("13")
+    p13_clust, p13_acc = p13.cluster()
+
+    p14 = p("14")
+    p14_clust, p14_acc = p14.cluster()
+
+    p15 = p("15")
+    p15_clust, p15_acc = p15.cluster()
+    p16 = p("16")
+    p16_clust, p16_acc = p16.cluster()
+
+    p17 = p("17")
+    p17_clust, p17_acc = p17.cluster()
+
+    p18 = p("18")
+    p18_clust, p18_acc = p18.cluster()
+
+    p19 = p("19")
+    p19_clust, p19_acc = p19.cluster()
+
+    p20 = p("20")
+    p20_clust, p20_acc = p20.cluster()
+
+    p21 = p("21")
+    p21_clust, p21_acc = p21.cluster()
+
+    p22 = p("22")
+    p14_clust, p22_acc = p22.cluster()
+
+    p23 = p("23")
+    p23_clust, p23_acc = p23.cluster()
+
+    p24 = p("24")
+    p24_clust, p24_acc = p24.cluster()
+
+    p25 = p("25")
+    p25_clust, p25_acc = p25.cluster()
+
+    p26 = p("26")
+    p26_clust, p26_acc = p26.cluster()
+
+    p27 = p("27")
+    p27_clust, p27_acc = p27.cluster()
+
+    p28 = p("28")
+    p28_clust, p28_acc = p28.cluster()
+
+    p29 = p("29")
+    p29_clust, p29_acc = p29.cluster()
+
+    p30 = p("30")
+    p30_clust, p30_acc = p30.cluster()
+
+    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30]
+
+    return participant_array
+
 # Get the ground truth labels from the MATLAB file
 def get_channel_names():
     # Load the labels
@@ -350,6 +448,25 @@ def plot_by_activity(participant, name):
     plt.savefig(f"{visualization_path}/{name}")
     plt.clf()
 
+def plot_gmm():
+    p_class_given_data, means, covars, p_class, mean_dist=all.GMM()
+    
+    # PCA for dimensionality reduction to 2D
+    pca = PCA(n_components=2)
+    dat_reduced = pca.fit_transform(all.fv.reshape(all.fv.shape[0], -1))
+
+    # Determine the most probable cluster for each data point
+    cluster_assignment = np.argmax(p_class_given_data, axis=1)
+
+    # Scatter plot of the data points colored by cluster assignment
+    plt.figure(figsize=(10, 6))
+    plt.scatter(dat_reduced[:, 0], dat_reduced[:, 1], c=cluster_assignment, cmap='viridis', alpha=0.5)
+    plt.title('Data points color-coded by cluster assignment after PCA')
+    plt.xlabel('Principal Component 1')
+    plt.ylabel('Principal Component 2')
+    plt.colorbar(label='Cluster')
+    plt.show()
+
 # Plots accuracy by participant or channel
 def plot_accuracies(accuracy, name):
     # Graphs the accuracy for each participant or channel compared to random chance (they all beat random chance yay)
@@ -382,6 +499,9 @@ if __name__ == "__main__":
     all.labels = labels_array
     all_clusters, all_accuracy = all.cluster(k)
 
+    plot_gmm()
+
     # # Plot the accuracy for all participants by activity
     plot_by_activity(ind_participants[0], f'Accuracy for {ind_participants[0].name} by Activity')
     plot_by_activity(all, 'Accuracy by Activity Type')
+

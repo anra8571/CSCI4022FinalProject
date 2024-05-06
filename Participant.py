@@ -17,6 +17,7 @@ class Participant:
         self.fv = fv
 
         self.clusters = []
+        self.gmm_cluster=[]
         self.accuracy = 0
 
         # Some datasets are combinations of participants, in which the feature vector/labels is externally constructed and passed in as an argument
@@ -217,29 +218,25 @@ class Participant:
 
         return self.clusters, self.accuracy
     
-    def GMM(self, dat, k):
-        # Flatten the last two dimensions
+    def GMM(self, k=25, epsilon=1e-4):
+        dat = self.fv
         if dat.ndim > 2:
             dat = dat.reshape(dat.shape[0], -1)  # Reshaping to (75, 120)
 
-        # Number of samples and features
         num_samples, num_features = dat.shape
 
-        # Initialize GMM parameters
         p_class = np.zeros(k)
         means = np.zeros((k, num_features))
         covars = np.zeros((k, num_features, num_features))
         p_data_given_class = np.zeros((num_samples, k))
         mean_dist = np.array(0)
 
-        # Initialize the means with random samples
         init_idx = np.random.choice(range(num_samples), size=k, replace=False)
         for dim in range(k):
-            covars[dim, :, :] = np.cov(dat.T)
+            covars[dim, :, :] = np.cov(dat.T) + epsilon * np.eye(num_features)
             means[dim, :] = dat[init_idx[dim]]
             p_class[dim] = 1 / k
 
-        # Expectation-Maximization steps
         for step in range(50):
             for dim in range(k):
                 p_data_given_class[:, dim] = stats.multivariate_normal.pdf(dat, mean=means[dim], cov=covars[dim])
@@ -255,10 +252,12 @@ class Participant:
                 weighted_data = dat.T * p_class_given_data[:, dim]
                 means[dim] = np.sum(weighted_data, axis=1) / n_class[dim]
                 centered_data = dat - means[dim]
-                covars[dim] = np.dot(centered_data.T * p_class_given_data[:, dim], centered_data) / n_class[dim]
+                cov_temp = np.dot(centered_data.T * p_class_given_data[:, dim], centered_data) / n_class[dim]
+                covars[dim] = (cov_temp + cov_temp.T) / 2 + epsilon * np.eye(num_features)  # Ensuring symmetry and regularization
 
-        # Calculate mean distance
         mean_dist = sum(np.sqrt(np.sum((means[dim] - dat[i]) ** 2) * p_class_given_data[i, dim])
                         for i in range(num_samples) for dim in range(k)) / (num_samples * k)
-
+        
+        self.gmm_cluster = p_class_given_data
+        print(self.gmm_cluster)
         return p_class_given_data, means, covars, p_class, mean_dist
