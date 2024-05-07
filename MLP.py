@@ -1,8 +1,8 @@
 # https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier.fit
 # Description of mathematics behind MLP: https://www.linkedin.com/posts/annarahn_deeplearning-neuralnetworks-math-activity-7171664061187706880-bABO?utm_source=share&utm_medium=member_desktop
 
-from sklearn.neural_network import MLPClassifier
-import numpy as np
+from sklearn.neural_network import MLPClassifier # type: ignore
+import numpy as np # type: ignore
 
 # Input: all (a Participant object containing the aggregated dataset to cluster using a multi-layer perceptron)
 def MLP(all, validation_percent=10):

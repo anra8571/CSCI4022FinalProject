@@ -3,14 +3,11 @@
 # https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
 
 import MLP
-
 import os
-from os.path import dirname, join as pjoin
 import scipy.io as sio  # type: ignore
 import numpy as np # type: ignore
 from scipy import stats # type: ignore
-from sklearn import cluster, metrics
-import sklearn
+from sklearn import metrics # type: ignore
 
 # Represents the data from one participant
 class Participant:
@@ -25,7 +22,6 @@ class Participant:
         self.dim_red = 0 # Dimension reduction using PCA
 
         self.clusters = []
-        self.gmm_cluster=[]
         self.accuracy = 0
         self.rand_index = 0
         self.mlp = 0
@@ -97,10 +93,10 @@ class Participant:
             trial = []
 
         # Save locally
-        with open(d3_outfile, 'wb') as f:
+        with open(save_directory_3d, 'wb') as f:
             np.save(f, np.array(data))
 
-        with open(d2_outfile, 'wb') as f:
+        with open(save_directory_2d, 'wb') as f:
             np.save(f, np.array(two_data))
 
         # Returns the np array
@@ -307,50 +303,6 @@ class Participant:
             print("The data is not in the right shape for MLP")
 
         return self.clusters, self.accuracy, self.rand_index
-    
-    def GMM(self, k=25, epsilon=1e-4):
-        dat = self.fv
-        if dat.ndim > 2:
-            dat = dat.reshape(dat.shape[0], -1)  # Reshaping to (75, 120)
-
-        num_samples, num_features = dat.shape
-
-        p_class = np.zeros(k)
-        means = np.zeros((k, num_features))
-        covars = np.zeros((k, num_features, num_features))
-        p_data_given_class = np.zeros((num_samples, k))
-        mean_dist = np.array(0)
-
-        init_idx = np.random.choice(range(num_samples), size=k, replace=False)
-        for dim in range(k):
-            covars[dim, :, :] = np.cov(dat.T) + epsilon * np.eye(num_features)
-            means[dim, :] = dat[init_idx[dim]]
-            p_class[dim] = 1 / k
-
-        for step in range(50):
-            for dim in range(k):
-                p_data_given_class[:, dim] = stats.multivariate_normal.pdf(dat, mean=means[dim], cov=covars[dim])
-
-            p_class_given_data = p_data_given_class * p_class
-            sums = np.sum(p_class_given_data, axis=1)
-            p_class_given_data = (p_class_given_data.T / sums).T
-
-            n_class = np.sum(p_class_given_data, axis=0)
-            p_class = n_class / num_samples
-
-            for dim in range(k):
-                weighted_data = dat.T * p_class_given_data[:, dim]
-                means[dim] = np.sum(weighted_data, axis=1) / n_class[dim]
-                centered_data = dat - means[dim]
-                cov_temp = np.dot(centered_data.T * p_class_given_data[:, dim], centered_data) / n_class[dim]
-                covars[dim] = (cov_temp + cov_temp.T) / 2 + epsilon * np.eye(num_features)  # Ensuring symmetry and regularization
-
-        mean_dist = sum(np.sqrt(np.sum((means[dim] - dat[i]) ** 2) * p_class_given_data[i, dim])
-                        for i in range(num_samples) for dim in range(k)) / (num_samples * k)
-        
-        self.gmm_cluster = p_class_given_data
-        print(self.gmm_cluster)
-        return p_class_given_data, means, covars, p_class, mean_dist
 
     # def hierarchical_cluster(self):
     #     agglo = cluster.FeatureAgglomeration(n_clusters = 3)

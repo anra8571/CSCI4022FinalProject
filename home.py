@@ -6,11 +6,7 @@ import MLP
 import DimReduction
 
 # Import libraries
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import scipy.io as sio
-import sklearn
+import numpy as np # type: ignore
 
 # Paths
 visualization_path = './Visualizations/'

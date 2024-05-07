@@ -1,10 +1,8 @@
 # For help with the comparison bar chart: https://stackoverflow.com/questions/53182452/python-create-bar-chart-comparing-2-sets-of-data
 # Stacked bar charts: https://stackoverflow.com/questions/14270391/how-to-plot-multiple-bars-grouped
 
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import scipy.io as sio
+import numpy as np # type: ignore
+import matplotlib.pyplot as plt # type: ignore
 
 def visualize(x, y, cluster):
     plt.colorbar(plt.scatter(x, y, c=cluster))

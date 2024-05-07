@@ -1,8 +1,6 @@
 from Participant import Participant as p
-import numpy as np
-import matplotlib.pyplot as plt
-import sys
-import scipy.io as sio
+import numpy as np # type: ignore
+import scipy.io as sio # type: ignore
 
 # Run each participant as a separate set, getting the clustering accuracy for each and comparing it to the LOOCV accuracy
 def run_singles():
