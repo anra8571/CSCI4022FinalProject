@@ -16,8 +16,8 @@ Papers: Contains relevant papers to this project
 Visualizations: Contains figures produced by the team
 
 ## Credits
-Anna Rahn: Converted data from MATLAB structs to numpy arrays, rearranged data for clustering by different combinations of participants, designed data visualizations
+Anna Rahn: Converted data from MATLAB structs to numpy arrays, rearranged data for clustering by different combinations of participants, wrote MLP for comparison, designed data visualizations, literature review, final report
 
-Kieran Stone: Wrote k-means algorithm, designed data visualizations
+Kieran Stone: Wrote k-means algorithm, designed data visualizations, final report
 
-Brodie Schmidt: Designed data visualizations
+Brodie Schmidt: Literature review, final report
