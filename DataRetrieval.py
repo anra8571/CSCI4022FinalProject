@@ -9,132 +9,139 @@ def run_singles():
     # LOOCV: 0.826667, 0.533333, 0.573333, 0.960000, 0.53333, 0.786667, 0.760000, 0.746667, 0.666667, 0.853333
     # Participant: 1      2         3          4        5         6         7         8         9        10
     accuracies = []
+    rands = []
 
     p1 = p("01")
-    p1_clust, p1_acc = p1.cluster()
+    p1_clust, p1_acc, p1_rand = p1.cluster()
     accuracies.append(p1_acc)
+    rands.append(p1_rand)
 
     p2 = p("02")
-    p2_clust, p2_acc = p2.cluster()
+    p2_clust, p2_acc, p2_rand = p2.cluster()
     accuracies.append(p2_acc)
+    rands.append(p2_rand)
 
     p3 = p("03")
-    p3_clust, p3_acc = p3.cluster()
+    p3_clust, p3_acc, p3_rand = p3.cluster()
     accuracies.append(p3_acc)
+    rands.append(p3_rand)
 
     p4 = p("04")
-    p4_clust, p4_acc = p4.cluster()
+    p4_clust, p4_acc, p4_rand = p4.cluster()
     accuracies.append(p4_acc)
+    rands.append(p4_rand)
 
     p5 = p("05")
-    p5_clust, p5_acc = p5.cluster()
+    p5_clust, p5_acc, p5_rand = p5.cluster()
     accuracies.append(p5_acc)
+    rands.append(p5_rand)
 
-    p6 = p("06")
-    p6_clust, p6_acc = p6.cluster()
-    accuracies.append(p6_acc)
+    # p6 = p("06")
+    # p6_clust, p6_acc = p6.cluster()
+    # accuracies.append(p6_acc)
 
-    p7 = p("07")
-    p7_clust, p7_acc = p7.cluster()
-    accuracies.append(p7_acc)
+    # p7 = p("07")
+    # p7_clust, p7_acc = p7.cluster()
+    # accuracies.append(p7_acc)
 
-    p8 = p("08")
-    p8_clust, p8_acc = p8.cluster()
-    accuracies.append(p8_acc)
+    # p8 = p("08")
+    # p8_clust, p8_acc = p8.cluster()
+    # accuracies.append(p8_acc)
 
-    p9 = p("09")
-    p9_clust, p9_acc = p9.cluster()
-    accuracies.append(p9_acc)
+    # p9 = p("09")
+    # p9_clust, p9_acc = p9.cluster()
+    # accuracies.append(p9_acc)
 
-    p10 = p("10")
-    p10_clust, p10_acc = p10.cluster()
-    accuracies.append(p10_acc)
+    # p10 = p("10")
+    # p10_clust, p10_acc = p10.cluster()
+    # accuracies.append(p10_acc)
 
-    p11 = p("11")
-    p11_clust, p11_acc = p11.cluster()
-    accuracies.append(p11_acc)
+    # p11 = p("11")
+    # p11_clust, p11_acc = p11.cluster()
+    # accuracies.append(p11_acc)
 
-    p12 = p("12")
-    p12_clust, p12_acc = p12.cluster()
-    accuracies.append(p12_acc)
+    # p12 = p("12")
+    # p12_clust, p12_acc = p12.cluster()
+    # accuracies.append(p12_acc)
 
-    p13 = p("13")
-    p13_clust, p13_acc = p13.cluster()
-    accuracies.append(p13_acc)
+    # p13 = p("13")
+    # p13_clust, p13_acc = p13.cluster()
+    # accuracies.append(p13_acc)
 
-    p14 = p("14")
-    p14_clust, p14_acc = p14.cluster()
-    accuracies.append(p14_acc)
+    # p14 = p("14")
+    # p14_clust, p14_acc = p14.cluster()
+    # accuracies.append(p14_acc)
 
-    p15 = p("15")
-    p15_clust, p15_acc = p15.cluster()
-    accuracies.append(p15_acc)
+    # p15 = p("15")
+    # p15_clust, p15_acc = p15.cluster()
+    # accuracies.append(p15_acc)
 
-    p16 = p("16")
-    p16_clust, p16_acc = p16.cluster()
-    accuracies.append(p16_acc)
+    # p16 = p("16")
+    # p16_clust, p16_acc = p16.cluster()
+    # accuracies.append(p16_acc)
 
-    p17 = p("17")
-    p17_clust, p17_acc = p17.cluster()
-    accuracies.append(p17_acc)
+    # p17 = p("17")
+    # p17_clust, p17_acc = p17.cluster()
+    # accuracies.append(p17_acc)
 
-    p18 = p("18")
-    p18_clust, p18_acc = p18.cluster()
-    accuracies.append(p18_acc)
+    # p18 = p("18")
+    # p18_clust, p18_acc = p18.cluster()
+    # accuracies.append(p18_acc)
 
-    p19 = p("19")
-    p19_clust, p19_acc = p19.cluster()
-    accuracies.append(p19_acc)
+    # p19 = p("19")
+    # p19_clust, p19_acc = p19.cluster()
+    # accuracies.append(p19_acc)
 
-    p20 = p("20")
-    p20_clust, p20_acc = p20.cluster()
-    accuracies.append(p20_acc)
+    # p20 = p("20")
+    # p20_clust, p20_acc = p20.cluster()
+    # accuracies.append(p20_acc)
 
-    p21 = p("21")
-    p21_clust, p21_acc = p21.cluster()
-    accuracies.append(p21_acc)
+    # p21 = p("21")
+    # p21_clust, p21_acc = p21.cluster()
+    # accuracies.append(p21_acc)
 
-    p22 = p("22")
-    p14_clust, p22_acc = p22.cluster()
-    accuracies.append(p22_acc)
+    # p22 = p("22")
+    # p14_clust, p22_acc = p22.cluster()
+    # accuracies.append(p22_acc)
 
-    p23 = p("23")
-    p23_clust, p23_acc = p23.cluster()
-    accuracies.append(p23_acc)
+    # p23 = p("23")
+    # p23_clust, p23_acc = p23.cluster()
+    # accuracies.append(p23_acc)
 
-    p24 = p("24")
-    p24_clust, p24_acc = p24.cluster()
-    accuracies.append(p24_acc)
+    # p24 = p("24")
+    # p24_clust, p24_acc = p24.cluster()
+    # accuracies.append(p24_acc)
 
-    p25 = p("25")
-    p25_clust, p25_acc = p25.cluster()
-    accuracies.append(p25_acc)
+    # p25 = p("25")
+    # p25_clust, p25_acc = p25.cluster()
+    # accuracies.append(p25_acc)
 
-    p26 = p("26")
-    p26_clust, p26_acc = p26.cluster()
-    accuracies.append(p26_acc)
+    # p26 = p("26")
+    # p26_clust, p26_acc = p26.cluster()
+    # accuracies.append(p26_acc)
 
-    p27 = p("27")
-    p27_clust, p27_acc = p27.cluster()
-    accuracies.append(p27_acc)
+    # p27 = p("27")
+    # p27_clust, p27_acc = p27.cluster()
+    # accuracies.append(p27_acc)
 
-    p28 = p("28")
-    p28_clust, p28_acc = p28.cluster()
-    accuracies.append(p28_acc)
+    # p28 = p("28")
+    # p28_clust, p28_acc = p28.cluster()
+    # accuracies.append(p28_acc)
 
-    p29 = p("29")
-    p29_clust, p29_acc = p29.cluster()
-    accuracies.append(p29_acc)
+    # p29 = p("29")
+    # p29_clust, p29_acc = p29.cluster()
+    # accuracies.append(p29_acc)
 
-    p30 = p("30")
-    p30_clust, p30_acc = p30.cluster()
-    accuracies.append(p30_acc)
+    # p30 = p("30")
+    # p30_clust, p30_acc = p30.cluster()
+    # accuracies.append(p30_acc)
 
-    participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30]
-
+    # participant_array = [p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13, p14, p15, p16, p17, p18, p19, p20, p21, p22, p23, p24, p25, p26, p27, p28, p29, p30]
+    participant_array = [p1, p2, p3, p4, p5]
     print(f"Accuracies for the {len(participant_array)} participants: {accuracies}")
+    print(f"Rand Indexes for the {len(participant_array)} participants: {rands}")
 
-    return participant_array, accuracies
+    return participant_array, accuracies, rands
 
 def run_channels(individuals):
     channels_array = []

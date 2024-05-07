@@ -23,23 +23,28 @@ k = 25
 
 if __name__ == "__main__":
     # Gets array of all the individual participants clustered by trial
-    ind_participants, ind_accuracies = DataRetrieval.run_singles()
+    ind_participants, ind_accuracies, rands = DataRetrieval.run_singles()
+    p4 = ind_participants[3]
+    # print(f"Dim FV for {p4.name}: {p4.fv.shape}")
+    # print(f"Dim FV reduced for {p4.name}: {p4.fv_reduced.shape}")
+    # print(p4.fv_reduced)
+    # p1.hierarchical_cluster()
 
     # Graphs the accuracy for each partcipant compared to random chance (they all beat random chance yay)
-    Plots.plot_accuracies(ind_accuracies, 'Accuracies by Individual Participant', visualization_path)
+    Plots.plot_accuracies(rands, 'Rand Index by Individual Participant', visualization_path)
 
-    # A Participant containing data for first 20 channels across all participants, all trials
-    channels_array, channels_accuracy = DataRetrieval.run_channels(np.array(ind_participants))
+    # # A Participant containing data for first 20 channels across all participants, all trials
+    # channels_array, channels_accuracy = DataRetrieval.run_channels(np.array(ind_participants))
 
-    # Graphs the accuracy by channel
-    Plots.plot_accuracies(channels_accuracy, 'Accuracies by Individual Channel', visualization_path)
+    # # Graphs the accuracy by channel
+    # Plots.plot_accuracies(channels_accuracy, 'Accuracies by Individual Channel', visualization_path)
 
-    # A Participant containing all trials, all channels, all participants. Cluster by trial
-    all_array, labels_array = DataRetrieval.get_all_participants(ind_participants)
-    all = p("all", fv=all_array, labels=labels_array)
-    all.labels = labels_array
-    all_clusters, all_accuracy = all.cluster(k)
+    # # A Participant containing all trials, all channels, all participants. Cluster by trial
+    # all_array, labels_array = DataRetrieval.get_all_participants(ind_participants)
+    # all = p("all", fv=all_array, labels=labels_array)
+    # all.labels = labels_array
+    # all_clusters, all_accuracy = all.cluster(k)
 
-    # # Plot the accuracy for all participants by activity
-    Plots.plot_by_activity(ind_participants[0], f'Accuracy for {ind_participants[0].name} by Activity', visualization_path, num_trials)
-    Plots.plot_by_activity(all, 'Accuracy by Activity Type', visualization_path, num_trials)
+    # # # Plot the accuracy for all participants by activity
+    # Plots.plot_by_activity(ind_participants[0], f'Accuracy for {ind_participants[0].name} by Activity', visualization_path, num_trials)
+    # Plots.plot_by_activity(all, 'Accuracy by Activity Type', visualization_path, num_trials)

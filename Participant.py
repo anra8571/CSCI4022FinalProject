@@ -1,10 +1,13 @@
 # https://docs.scipy.org/doc/scipy/reference/generated/scipy.io.loadmat.html
+# https://scikit-learn.org/stable/modules/generated/sklearn.cluster.FeatureAgglomeration.html#sklearn.cluster.FeatureAgglomeration
+# https://scikit-learn.org/stable/modules/clustering.html#clustering-performance-evaluation
 
 import os
 from os.path import dirname, join as pjoin
 import scipy.io as sio  # type: ignore
 import numpy as np # type: ignore
 from scipy import stats # type: ignore
+from sklearn import cluster, metrics
 
 # Represents the data from one participant
 class Participant:
@@ -12,17 +15,19 @@ class Participant:
     Each participant contains 75 trials, 40 channels, and 3 averages
     '''
 
-    def __init__(self, name, fv=[], labels=None):
+    def __init__(self, name, fv=[], fv_reduced=[], labels=None):
         self.name = name
         self.fv = fv
+        self.fv_reduced = fv_reduced
 
         self.clusters = []
         self.gmm_cluster=[]
         self.accuracy = 0
+        self.rand_index = 0
 
         # Some datasets are combinations of participants, in which the feature vector/labels is externally constructed and passed in as an argument
         if len(self.fv) == 0:
-            self.fv = self.load_struct()
+            self.fv, self.fv_reduced = self.load_struct()
         if labels is None:
             self.labels = self.get_labels()
         else:
@@ -48,12 +53,14 @@ class Participant:
         
         # Filename variables
         filename = f"{self.name}_x.mat"
-        outfile = f"{self.name}_fv.np"
+        d3_outfile = f"{self.name}_fv.np"
+        d2_outfile = f"{self.name}_fv_reduced.np"
 
         # Loads MATLAB file into a dictionary
         cwd = os.getcwd()
         directory = f"{cwd}/Data/Clustering/{filename}"
-        save_directory = f"{cwd}/Data/NP/{outfile}"
+        save_directory_3d = f"{cwd}/Data/NP/{d3_outfile}"
+        save_directory_2d = f"{cwd}/Data/NP/{d2_outfile}"
         mat_content = sio.loadmat(directory)["X"]
 
         # Reads in 2D MATLAB struct and converts to expected 3D Numpy array (in MATLAB, the epoch and channel are both contained in column)
@@ -75,12 +82,24 @@ class Participant:
             data.append(trial)
             trial = []
 
+        # Reads in 2D MATLAB struct and saves as original 2D format (rows: trials, columns: channels and epochs)
+        two_data = [] # Contains full set
+        for row in range(0, len(mat_content)):
+            trial = []
+            for col in range(0, len(mat_content[0])):
+                trial.append(mat_content[row, col])
+            two_data.append(trial)
+            trial = []
+
         # Save locally
-        with open(save_directory, 'wb') as f:
+        with open(d3_outfile, 'wb') as f:
             np.save(f, np.array(data))
 
+        with open(d2_outfile, 'wb') as f:
+            np.save(f, np.array(save_directory_2d))
+
         # Returns the np array
-        return np.array(data)
+        return np.array(data), np.array(two_data)
     
     # From homework in class, generalized for multiple dimensions
     def distance(self, slice1, slice2):
@@ -155,6 +174,8 @@ class Participant:
         return centroids, clusters, rec_error
     
     # Checks the clusters from k-means against the ground truth data
+    # Input: Clusters (predicted group)
+    # Input: Labels (ground truth)
     def accuracy_calculation(self, clusters, labels):
         if labels is None:
             labels  # type: ignore
@@ -189,7 +210,9 @@ class Participant:
         two_acc = two_c / two_total
         three_acc = three_c / three_total
 
-        return accuracy, one_acc, two_acc, three_acc
+        rand_score = metrics.adjusted_rand_score(self.labels, clusters)
+
+        return accuracy, one_acc, two_acc, three_acc, rand_score
     
     # Runs the clustering function and accuracy calculation. Saves data to the class object and prints to terminal. Repeat 25 times and take the highest accuracy
     def cluster(self, k=25, labels=None):
@@ -202,7 +225,7 @@ class Participant:
         for i in range(k):
             # Clusters the data
             centroids, clusters, meanerror = self.kmeans_3D(self.fv)
-            acc, one, two, three = self.accuracy_calculation(clusters, labels)
+            acc, one, two, three, rand_ind = self.accuracy_calculation(clusters, labels)
 
             # If this is the best trial so far, save the data
             if acc > acc_high:
@@ -213,10 +236,11 @@ class Participant:
         # At the end, save the data to the object and print the final score
         self.clusters = clust_high
         self.accuracy = acc_high
+        self.rand_index = rand_ind
 
-        print(f"The clustering accuracy for {self.name} is {self.accuracy * 100}")
+        print(f"The clustering accuracy for {self.name} is {self.accuracy * 100} and the Rand index is {self.rand_index}")
 
-        return self.clusters, self.accuracy
+        return self.clusters, self.accuracy, self.rand_index
     
     def GMM(self, k=25, epsilon=1e-4):
         dat = self.fv
@@ -261,3 +285,12 @@ class Participant:
         self.gmm_cluster = p_class_given_data
         print(self.gmm_cluster)
         return p_class_given_data, means, covars, p_class, mean_dist
+    
+    # def hierarchical_cluster(self):
+    #     agglo = cluster.FeatureAgglomeration(n_clusters = 3)
+    #     agglo.fit(self.fv)
+
+    #     print("Agglo: ", agglo)
+
+    #     fv_reduced = agglo.transform(self.fv)
+    #     print("FV Reduced: ", fv_reduced)
