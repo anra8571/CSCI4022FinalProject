@@ -6,7 +6,6 @@ import MLP
 import os
 import scipy.io as sio  # type: ignore
 import numpy as np # type: ignore
-from scipy import stats # type: ignore
 from sklearn import metrics # type: ignore
 
 # Represents the data from one participant

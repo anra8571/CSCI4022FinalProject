@@ -33,6 +33,7 @@ def plot_by_activity(participant, name, visualization_path, num_trials=75):
     plt.bar(nums, count_arr, alpha=0.7)
     plt.xlabel("Activity")
     plt.ylabel("Accuracy")
+    if(name=='Accuracy by Activity Type'):plt.title("Clustering Accuracy by Activity Type")
     plt.savefig(f"{visualization_path}/{name}")
     plt.clf()
 
@@ -47,6 +48,12 @@ def plot_accuracies(accuracy, name, visualization_path, random_chance=True):
     if random_chance:
         ax.plot(x1, y1, 'r', label="Random Chance")
     ax.legend()
+    if(name=='Accuracy by Individual Participant'):
+        plt.title("Clustering Accuracies by Participant")
+        plt.xlabel("Participant number")
+    elif(name=='Accuracies by Individual Channel'):
+        plt.title("Clustering Accuracies by Channel")
+        plt.xlabel("Channel number")
     plt.savefig(f'{visualization_path}/{name}')
     plt.clf()
 
@@ -58,7 +65,7 @@ def plot_compare_aggregate(set_1, set_2, name, l1, l2, visualization_path):
     g1 = ax.bar(ind, set_1, bar_width)
     g2 = ax.bar(ind + bar_width, set_2, bar_width)
     ax.legend((g1[0], g2[0]), ("Normal", "Reduced Dimensions"))
-    plt.savefig(f'{visualization_path}/Reduced Dimension Comparison')
+    plt.savefig(f'{visualization_path}/Reduced Dimension Comparison Aggregate')
     plt.clf()
 
 # Plots two sets of data side-by-side for comparison, bar chart, for all participants
@@ -68,6 +75,9 @@ def plot_compare(y1, y2, visualization_path):
     fig, ax = plt.subplots()
     g1 = ax.bar(ind, y1, bar_width)
     g2 = ax.bar(ind + bar_width, y2, bar_width)
-    ax.legend((g1[0], g2[0]), ("Normal", "Reduced Dimensions"))
+    ax.legend((g1[0], g2[0]), ("Non-Reduced Dimensions", "Reduced Dimensions"))
+    plt.title("Comparison of Reduced Dimension Data and Non-Reduced Dimension data")
+    plt.xlabel("Participant Number")
+    plt.ylabel("Accuracy")
     plt.savefig(f'{visualization_path}/Reduced Dimension Comparison')
     plt.clf()
